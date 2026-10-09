@@ -1,0 +1,40 @@
+BUILDING A NETWORK — DESIGN REFLECTION
+Name: ____________________    Class: ____________________
+Current challenge: 4 — Find a balance
+Devices: 6
+Installed strings: 6; working: 6; cut: 0
+Communicating pairs: 15/15
+Longest shortest path: 3 hops
+Risky working strings: 0
+Every single working-string cut keeps all devices connected: Yes
+Round 4 targets: budget 8 strings; maximum 3 hops; survive any one string cut
+
+CURRENT CONNECTIONS
+A — B: working
+B — C: working
+C — D: working
+D — E: working
+E — F: working
+A — F: working
+
+CHALLENGE 1: Everyone, directly
+Why does this network need so many strings? How would adding one more device change the cost?
+(No reflection entered)
+
+
+CHALLENGE 2: Less string
+How did you reduce the string count? Describe an indirect path in your design. What happens if a string is cut?
+I used five strings. The message traveled through other devices.
+
+
+CHALLENGE 3: Survive a cut
+Which alternate path carries a message after a cut? Why can your design survive every individual string cut?
+(No reflection entered)
+
+
+CHALLENGE 4: Find a balance
+Explain your compromise between cost, reliability, and path length. Which different priorities would make you choose a different network?
+A ring balances six strings, an alternate route, and paths up to three hops.
+
+
+Model: equal cost per string, bidirectional links, shortest-hop routes. Cut strings remain paid for. Link failures only. Hops are not a bandwidth measurement.

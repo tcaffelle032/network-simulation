@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "n": 6,
+  "round": 4,
+  "edges": [
+    {
+      "a": 0,
+      "b": 1,
+      "cut": false
+    },
+    {
+      "a": 1,
+      "b": 2,
+      "cut": false
+    },
+    {
+      "a": 2,
+      "b": 3,
+      "cut": false
+    },
+    {
+      "a": 3,
+      "b": 4,
+      "cut": false
+    },
+    {
+      "a": 4,
+      "b": 5,
+      "cut": false
+    },
+    {
+      "a": 0,
+      "b": 5,
+      "cut": false
+    }
+  ],
+  "budget": 8,
+  "hopLimit": 3,
+  "notes": [
+    "",
+    "I used five strings. The message traveled through other devices.",
+    "",
+    "A ring balances six strings, an alternate route, and paths up to three hops."
+  ]
+}
