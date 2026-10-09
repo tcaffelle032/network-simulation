@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Building a Network · String Lab</title>
+<style>
+:root{color-scheme:light;--paper:#f5f6f2;--panel:#fff;--ink:#172c38;--muted:#516572;--line:#d9e2e2;--teal:#006b63;--teal-soft:#e1f2ed;--orange:#a54b16;--orange-soft:#fff0dc;--red:#a52d3b;--blue:#1c66a0;--shadow:0 8px 26px #172c3807;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:16px}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink)}button,input,select,textarea{font:inherit}button,select,input[type=checkbox]{cursor:pointer}button{color:var(--ink);border:1px solid var(--line);border-radius:9px;background:var(--panel);padding:9px 13px;font-weight:600;line-height:1.25}button:hover{background:#eef3f1}button:disabled{cursor:default;opacity:.5}button.primary{color:white;background:var(--teal);border-color:var(--teal)}button.primary:hover{background:#00554f}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,[role=button]:focus-visible{outline:3px solid var(--blue);outline-offset:3px}button.small{padding:7px 10px;font-size:.86rem}input[type=number],select{border:1px solid #bac9cd;border-radius:7px;background:white;color:var(--ink);padding:7px 9px}input[type=number]{width:74px}textarea{width:100%;min-height:94px;resize:vertical;border:1px solid #bac9cd;border-radius:9px;padding:11px;color:var(--ink);background:white;line-height:1.5}label{font-weight:600;font-size:.87rem}label.check{display:flex;align-items:center;gap:8px}input[type=checkbox]{accent-color:var(--teal);width:17px;height:17px}h1,h2,h3,p{margin:0}h1{font-size:1.65rem;letter-spacing:-.045em;line-height:1.1}h2{font-size:1.3rem;letter-spacing:-.025em}h3{font-size:1rem}p{line-height:1.5}.muted{color:var(--muted)}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.72rem;font-weight:700;color:var(--teal)}.hidden,[hidden]{display:none!important}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.app{max-width:1530px;margin:auto;padding:24px 28px 30px}.header{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:22px}.brand{display:flex;gap:14px;align-items:center}.brand-mark{display:grid;place-items:center;background:var(--ink);color:white;width:48px;height:48px;border-radius:13px;font-size:1.3rem}.brand .eyebrow{margin-bottom:5px}.header-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.mode{padding:8px 12px;border-radius:9px;background:#e9eeea;display:flex;gap:7px;align-items:center}.challenges{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}.challenge{display:flex;align-items:center;gap:12px;text-align:left;padding:14px 16px;background:#edf0ed;border-color:transparent;min-height:68px}.challenge .number{display:grid;place-items:center;flex-shrink:0;width:30px;height:30px;background:white;border-radius:50%;font-size:.85rem}.challenge strong{font-size:.96rem}.challenge span.caption{display:block;color:var(--muted);font-weight:400;font-size:.78rem;margin-top:3px}.challenge[aria-selected=true]{background:var(--ink);color:white}.challenge[aria-selected=true] .number{background:#355464;color:white}.challenge[aria-selected=true] span.caption{color:#c6d7df}.workspace{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:20px;align-items:start}.stage-panel,.goal-panel,.reflection-panel,.examples-panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow)}.stage-tools{padding:15px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.toolgroup{display:flex;gap:5px;padding:4px;border-radius:10px;background:var(--paper)}.toolgroup button{border-color:transparent;background:transparent;padding:7px 10px;font-size:.87rem}.toolgroup button[aria-pressed=true]{background:white;border-color:#c1d2d1;box-shadow:0 2px 5px #172c3810}.device-setting{display:flex;align-items:center;gap:7px}.canvas-wrap{position:relative;overflow:hidden}.network{display:block;width:100%;height:auto;min-height:310px;max-height:530px;touch-action:manipulation;background-color:#fcfdfb;background-image:radial-gradient(#dce4e1 .8px,transparent .8px);background-size:20px 20px}.network .edge{stroke:#8097a3;stroke-width:3;stroke-linecap:round;fill:none}.network .edge.cut{stroke:#b14553;stroke-dasharray:8 7;stroke-width:2}.network .edge.vulnerable{stroke:#b46713;stroke-width:4}.network .edge.route{stroke:var(--teal);stroke-width:5}.network .hit{stroke:transparent;stroke-width:18;fill:none;cursor:pointer}.network .device{cursor:pointer}.network .node-ring{fill:white;stroke:#294c5e;stroke-width:2}.network .node-core{fill:#e6efee}.network .device:hover .node-ring{stroke:var(--teal);stroke-width:4}.network .device.selected .node-ring{stroke:var(--teal);stroke-width:4;fill:var(--teal-soft)}.network .node-letter{fill:#172c38;font-size:20px;font-weight:700;pointer-events:none}.network .node-label{fill:#435e6d;font-size:14px;font-weight:500;pointer-events:none}.network .cut-mark{fill:#a52d3b;stroke:#fcfdfb;stroke-width:4;paint-order:stroke;font-size:22px;font-weight:700;pointer-events:none}.network .packet{fill:#fff;stroke:var(--teal);stroke-width:4;pointer-events:none}.canvas-legend{position:absolute;left:17px;top:14px;display:flex;gap:12px;flex-wrap:wrap;font-size:.75rem;color:var(--muted);pointer-events:none;background:#fcfdfbdd;padding:5px 8px;border-radius:6px}.legend-item{display:flex;align-items:center;gap:6px}.legend-line{width:18px;height:0;border-top:3px solid #8097a3}.legend-line.cut{border-top:2px dashed #b14553}.legend-line.route{border-color:var(--teal)}.canvas-instruction{padding:11px 18px;border-top:1px solid var(--line);font-size:.87rem;background:#f7f9f6;min-height:44px;border-radius:0 0 15px 15px}.message-panel{padding:16px 18px;border-top:1px solid var(--line)}.message-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}.message-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.message-controls select{min-width:78px}.message-controls label{font-size:.78rem;color:var(--muted)}.route-result{margin-top:10px;min-height:25px;font-size:.9rem}.route-result strong{color:var(--teal)}.route-model{font-size:.74rem;color:var(--muted);margin-top:4px}.goal-panel{padding:22px}.goal-panel .eyebrow{margin-bottom:8px}.goal-description{font-size:.92rem;margin-top:9px}.goal-state{margin-top:18px;border-radius:9px;background:#f0f3f1;padding:12px}.goal-state.pass{background:var(--teal-soft)}.goal-state.warn{background:var(--orange-soft)}.goal-state strong{display:block;font-size:.92rem}.goal-state p{font-size:.83rem;margin-top:4px}.metrics{margin-top:17px}.metric{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px solid #e7edeb;font-size:.86rem}.metric strong{font-size:1.18rem;letter-spacing:-.025em;font-variant-numeric:tabular-nums;text-align:right}.metric small{font-size:.72rem;font-weight:400;color:var(--muted)}.goal-targets{margin-top:16px;font-size:.82rem}.goal-targets .target{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px}.goal-targets input{width:60px;font-size:.82rem}.target-note{font-size:.73rem;color:var(--muted);margin-top:8px;line-height:1.45}.action-list{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:18px}.action-list button{font-size:.82rem;padding:8px}.wide-button{grid-column:1/-1}.failure-check{margin-top:14px;font-size:.79rem;line-height:1.5;color:var(--muted)}.reflection-panel{margin-top:18px;padding:18px}.reflection-panel label{display:block;margin:9px 0}.reflection-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.reflection-top span{font-size:.76rem;color:var(--muted)}.footer-row{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:16px;flex-wrap:wrap}.footer-row p{font-size:.76rem;color:var(--muted)}.footer-actions{display:flex;gap:7px;flex-wrap:wrap}.examples-panel{margin-top:18px;padding:16px 18px}.examples-panel summary{cursor:pointer;font-size:.9rem;font-weight:600}.example-controls{display:flex;gap:7px;flex-wrap:wrap;margin:13px 0}.example-controls button{font-size:.82rem}table{border-collapse:collapse;width:100%;font-size:.81rem;text-align:left}th{color:var(--muted);font-weight:600}td,th{padding:8px 7px;border-bottom:1px solid var(--line)}td:not(:first-child),th:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}.table-wrap{overflow:auto}.example-note{font-size:.76rem;color:var(--muted);margin-top:10px}dialog{border:1px solid var(--line);border-radius:16px;max-width:760px;width:calc(100% - 32px);max-height:85vh;padding:28px;color:var(--ink);box-shadow:0 20px 70px #172c3833}dialog::backdrop{background:#172c3877}.dialog-head{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:20px}.dialog-content{font-size:.94rem}.dialog-content h3{margin:20px 0 7px}.dialog-content p{margin:8px 0}.dialog-content ol,.dialog-content ul{padding-left:22px;line-height:1.55}.dialog-content li{margin-bottom:8px}.dialog-content dt{font-weight:700;margin-top:12px}.dialog-content dd{margin:3px 0 0;color:var(--muted);line-height:1.5}.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;padding:11px 18px;border-radius:9px;max-width:calc(100% - 30px);z-index:20;font-size:.9rem;box-shadow:0 5px 20px #0002}.presenting .reflection-panel,.presenting .footer-row,.presenting .examples-panel{display:none}.presenting .app{max-width:1700px}.presenting .network{max-height:65vh}.presenting .metrics .metric{padding:14px 0}.presenting .goal-description{font-size:1rem}@media(min-width:1500px){.workspace{grid-template-columns:minmax(0,1fr) 365px}.network{max-height:610px}}@media(max-width:1050px){.app{padding:18px}.workspace{grid-template-columns:minmax(0,1fr) 295px;gap:14px}.goal-panel{padding:17px}.challenge{padding:12px;gap:8px}.challenge span.caption{display:none}.header-actions button{font-size:.82rem}.mode{font-size:.8rem}.brand-mark{display:none}}@media(max-width:800px){.header{align-items:flex-start;flex-direction:column;gap:14px}.challenges{grid-template-columns:repeat(2,1fr);gap:7px}.challenge{min-height:55px}.workspace{grid-template-columns:1fr}.goal-panel{display:grid;grid-template-columns:1fr 1fr;gap:0 22px}.goal-panel>.eyebrow,.goal-panel>h2,.goal-panel>.goal-description,.goal-panel>.goal-state{grid-column:1/-1}.goal-panel>.metrics{grid-row:5/8}.action-list{align-self:start}.network{min-height:280px}.presenting .network{max-height:unset}}@media(max-width:480px){.app{padding:12px}.header-actions{gap:6px}h1{font-size:1.45rem}.challenge strong{font-size:.82rem}.challenge .number{width:25px;height:25px}.stage-tools{padding:10px}.goal-panel{display:block}.network{min-height:240px}.reflection-top{display:block}.message-controls{gap:5px}.message-controls select{min-width:58px;padding:6px}.message-controls button{font-size:.8rem}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}@media print{body{background:white}.app{padding:0}.header-actions,.stage-tools,.challenges,.canvas-instruction,.message-controls,.action-list,.footer-actions,.example-controls,.toast{display:none!important}.workspace{grid-template-columns:1fr 280px;gap:12px}.stage-panel,.goal-panel,.reflection-panel,.examples-panel{box-shadow:none;break-inside:avoid}.network{max-height:400px}.reflection-panel textarea{min-height:110px}.goal-targets input{border:0}.footer-row p{font-size:.7rem}dialog{position:static;max-height:none;width:100%;border:0}.dialog-head button{display:none}.presenting .reflection-panel,.presenting .footer-row{display:block}}
+/* Fit the controls and network together on classroom displays. */
+@media(min-width:801px){
+  .presenting .app{padding:17px 22px}
+  .presenting .header{margin-bottom:15px}
+  .presenting .challenges{margin-bottom:15px}
+  .presenting .challenge{min-height:58px;padding:11px 14px}
+  .presenting .network{height:calc(100vh - 410px);min-height:235px;max-height:none}
+  .presenting .network .node-letter{font-size:25px}
+  .presenting .stage-tools{padding:10px 14px}
+  .presenting .message-panel{padding:10px 14px}
+  .presenting .message-head{margin-bottom:7px}
+  .presenting .route-model{display:none}
+  .presenting .canvas-instruction{padding:9px 14px;min-height:36px;font-size:.8rem}
+  .presenting .goal-panel{padding:16px}
+  .presenting .goal-description,.presenting .target-note,.presenting #riskControl{display:none}
+  .presenting .goal-panel h2{font-size:1.15rem}
+  .presenting .goal-state{margin-top:11px;padding:10px}
+  .presenting .goal-state p{font-size:.77rem;line-height:1.4}
+  .presenting .metrics{margin-top:8px}
+  .presenting .metrics .metric{padding:7px 0;font-size:.78rem}
+  .presenting .metric strong{font-size:1rem}
+  .presenting .goal-targets{margin-top:11px}
+  .presenting .goal-targets h3{font-size:.88rem}
+  .presenting .target{margin-top:5px}
+  .presenting .target input{padding:4px 7px}
+  .presenting .action-list{margin-top:12px}
+  .presenting .action-list button{padding:7px;font-size:.78rem}
+  .presenting .failure-check{margin-top:10px;font-size:.74rem;line-height:1.4}
+}
+@media(max-width:600px){.network .node-label{display:none}.network .node-letter{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <div class="brand"><div class="brand-mark" aria-hidden="true">⌘</div><div><p class="eyebrow">The internet · String lab</p><h1>Building a network</h1></div></div>
+    <div class="header-actions">
+      <label class="check mode"><input id="teacherMode" type="checkbox" checked>Teacher tools</label>
+      <button id="guideButton" class="small">Lesson guide</button><button id="presentButton" class="small" aria-pressed="false">Projector view</button>
+    </div>
+  </header>
+  <nav class="challenges" aria-label="Network challenges" role="tablist">
+    <button class="challenge" data-round="1" role="tab" aria-selected="true" aria-controls="workspace"><span class="number">1</span><span><strong>Everyone, directly</strong><span class="caption">A string for every pair</span></span></button>
+    <button class="challenge" data-round="2" role="tab" aria-selected="false" aria-controls="workspace"><span class="number">2</span><span><strong>Less string</strong><span class="caption">Connect everyone for less</span></span></button>
+    <button class="challenge" data-round="3" role="tab" aria-selected="false" aria-controls="workspace"><span class="number">3</span><span><strong>Survive a cut</strong><span class="caption">Build an alternate path</span></span></button>
+    <button class="challenge" data-round="4" role="tab" aria-selected="false" aria-controls="workspace"><span class="number">4</span><span><strong>Find a balance</strong><span class="caption">Cost, reliability, path length</span></span></button>
+  </nav>
+  <main id="workspace" class="workspace" role="tabpanel" aria-label="Current network challenge">
+    <div>
+      <section class="stage-panel" aria-label="Network builder">
+        <div class="stage-tools">
+          <div class="toolgroup" role="group" aria-label="Network editing tool"><button id="connectTool" aria-pressed="true">Connect</button><button id="cutTool" aria-pressed="false">Cut / repair</button></div>
+          <div class="device-setting"><label for="deviceCount">Devices</label><input id="deviceCount" type="number" min="3" max="16" value="6"><button id="applyCount" class="small">Apply</button></div>
+        </div>
+        <div class="canvas-wrap">
+          <div class="canvas-legend" aria-hidden="true"><span class="legend-item"><i class="legend-line"></i>String</span><span class="legend-item"><i class="legend-line cut"></i>Cut</span><span class="legend-item"><i class="legend-line route"></i>Message path</span></div>
+          <svg id="network" class="network" viewBox="0 0 760 510" role="group" aria-labelledby="networkTitle networkDescription"><title id="networkTitle">Interactive computer network</title><desc id="networkDescription">Select two devices to connect them with a string. Each device and connection can also be activated with the keyboard.</desc><g id="edgeLayer"></g><g id="nodeLayer"></g><g id="packetLayer" aria-hidden="true"></g></svg>
+        </div>
+        <section class="message-panel" aria-label="Send a message">
+          <div class="message-head"><h3>Can a message get there?</h3><button id="clearPath" class="small">Clear path</button></div>
+          <div class="message-controls"><label for="sender">From</label><select id="sender" aria-label="Message sender"></select><label for="receiver">To</label><select id="receiver" aria-label="Message receiver"></select><button id="sendButton" class="primary">Send message</button><button id="stepButton">One hop</button></div>
+          <p id="routeResult" class="route-result" aria-live="polite">Choose a sender and receiver, then send a message.</p>
+          <p class="route-model">Messages use a shortest available path. Each hop takes one model step. Real speed also depends on bandwidth, delay, and congestion.</p>
+        </section>
+        <p id="instruction" class="canvas-instruction" aria-live="polite">Select two devices to add a string. Select the same pair again to remove it.</p>
+      </section>
+      <details id="examples" class="examples-panel"><summary>Teacher examples: compare network designs</summary><div id="exampleControls" class="example-controls"></div><div class="table-wrap"><table><caption class="sr-only">Example designs for the current number of devices, with all strings working</caption><thead><tr><th>Design</th><th>Strings</th><th>Longest path</th><th>Risky strings*</th></tr></thead><tbody id="exampleTable"></tbody></table></div><p class="example-note">* Cutting a risky string separates the network. These designs show different tradeoffs. String crossings do not create connections.</p></details>
+      <section class="reflection-panel" aria-label="Student reflection"><div class="reflection-top"><h3>Your design reasoning</h3><span id="reflectionRound">Challenge 1 of 4</span></div><label id="reflectionPrompt" for="reflection"></label><textarea id="reflection" maxlength="5000" placeholder="Explain your choices using the network you built."></textarea></section>
+    </div>
+    <aside class="goal-panel" aria-label="Challenge goal and live results">
+      <p id="goalEyebrow" class="eyebrow">Challenge 1 of 4</p><h2 id="goalTitle">Everyone, directly</h2><p id="goalDescription" class="goal-description"></p>
+      <div id="goalState" class="goal-state" role="status"><strong id="goalStatus"></strong><p id="goalFeedback"></p></div>
+      <div class="metrics" aria-label="Live network measurements">
+        <div class="metric"><span>Strings paid for</span><strong id="stringsMetric">0</strong></div>
+        <div class="metric"><span>Working strings</span><strong id="workingMetric">0</strong></div>
+        <div class="metric"><span>Pairs that can communicate</span><strong id="pairsMetric">0 <small>/ 15</small></strong></div>
+        <div class="metric"><span>Longest shortest path</span><strong id="hopsMetric">—</strong></div>
+        <div class="metric"><span>Risky working strings</span><strong id="bridgeMetric">0</strong></div>
+      </div>
+      <div id="balanceTargets" class="goal-targets" hidden><h3>Classroom targets</h3><div class="target"><label for="stringBudget">String budget</label><input id="stringBudget" type="number" min="0" max="120" value="8"></div><div class="target"><label for="hopLimit">Maximum hops</label><input id="hopLimit" type="number" min="1" max="15" value="3"></div><p class="target-note">Also survive any one string cut. These adjustable targets are an extension of the lesson. Some combinations are impossible.</p></div>
+      <div class="action-list"><button id="testCut" class="primary wide-button">Test one string cut</button><button id="repairAll">Repair all</button><button id="undoButton" disabled>Undo</button><button id="clearButton">Clear strings</button><button id="nextButton">Next challenge</button></div>
+      <p id="failureCheck" class="failure-check"></p>
+      <label id="riskControl" class="check" style="margin-top:13px"><input id="showRisk" type="checkbox">Highlight risky strings</label>
+    </aside>
+  </main>
+  <footer class="footer-row"><p>1 string = 1 connection cost. Every string joins exactly two devices.<br>Offline model · No account or internet needed.</p><div class="footer-actions"><button id="saveButton" class="small">Save design</button><button id="loadButton" class="small">Open design</button><button id="reportButton" class="small">Download reflection</button><button id="printButton" class="small">Print</button></div></footer>
+</div>
+<input id="loadFile" type="file" accept=".json,application/json" hidden>
+<div id="toast" class="toast" role="status" hidden></div>
+<dialog id="guide"><div class="dialog-head"><div><p class="eyebrow">Grades 9–12 · 20–30 minutes</p><h2>A network made of strings</h2></div><button id="closeGuide">Close</button></div><div class="dialog-content">
+  <p>Use the devices as virtual classmates. A string lets two devices communicate directly. A device can relay a message along several strings, creating an indirect path.</p>
+  <h3>Suggested lesson flow</h3><ol>
+    <li><strong>Notice the problem · 2–3 minutes.</strong> Connect A–B, C–D, and E–F. Try to send from A to F. Ask why paired connections leave separate groups.</li>
+    <li><strong>Challenge 1 · 4 minutes.</strong> Everyone must speak directly to everyone else. Build the network. Ask how the number of strings grows as devices join.</li>
+    <li><strong>Challenge 2 · 4–5 minutes.</strong> Keep everyone connected using the fewest strings. Compare a chain with a star. Both can meet the cost goal, but messages travel different paths.</li>
+    <li><strong>Challenge 3 · 4–5 minutes.</strong> Keep everyone connected after any one string is cut. Test different strings, repair them, and improve the network. Ask why an alternate path helps.</li>
+    <li><strong>Challenge 4 · 4–6 minutes.</strong> Balance the string budget, survival of a cut, and maximum path length. Keep a design when moving between challenges so students can improve it.</li>
+    <li><strong>Reflect · 2–4 minutes.</strong> Download the design reasoning. Ask which compromise students chose and why no design is best for every situation.</li>
+  </ol>
+  <h3>How to use the builder</h3><ul><li><strong>Connect:</strong> select two devices. Selecting an existing pair removes its string, including a cut string.</li><li><strong>Cut / repair:</strong> select a string to toggle its failure. A cut string still counts as paid for. Repairing restores the original connection.</li><li><strong>Test one string cut:</strong> the program cuts a vulnerable string when one exists. Otherwise it chooses a working string. Repair between trials to test the original design. You can also cut any string yourself.</li><li><strong>Send message:</strong> watch a message move along a shortest path. One hop advances it one connection at a time. A crossing of strings is never a junction.</li><li><strong>Teacher tools:</strong> show example designs and highlight vulnerable strings. Turn this off for independent work. Examples are optional and replace the current strings. Undo restores the previous design.</li><li><strong>Projector view:</strong> enlarges the working area and hides the reflection and file controls. Click again to return. Use your browser’s full-screen control if desired.</li><li><strong>Save design:</strong> download the current network and all four reflections. Open design restores that file on any computer with this simulator.</li></ul>
+  <h3>Teacher reference</h3><p>For <em>n</em> devices, a direct connection for every pair needs <strong>n(n − 1)/2</strong> strings. A connected network needs at least <strong>n − 1</strong> strings. A connected network that survives any single string cut needs at least <strong>n</strong> strings for n ≥ 3. A ring achieves that minimum.</p><p>A star keeps paths short while relying on its central device and each individual string. A ring offers an alternate path after a string cut, but messages may need more hops. More connections can reduce hops and improve resilience while increasing cost.</p><p>The automatic single-cut check tries every working string individually. “Risky” means removing that string disconnects the current working network. If the network is already separated, connect it before judging whole-network resilience.</p>
+  <h3>Vocabulary</h3><dl><dt>Computing device</dt><dd>A machine that can run a program, such as a computer, router, tablet, or server.</dd><dt>Computing system</dt><dd>Computing devices and programs working together for a common purpose.</dd><dt>Computing network</dt><dd>Interconnected computing devices capable of sending or receiving data.</dd><dt>Path</dt><dd>The sequence of connections from a sender to a receiver.</dd><dt>Bandwidth</dt><dd>The maximum amount of data that can be sent in a fixed amount of time, usually in bits per second. This simulator compares hops and does not measure bandwidth.</dd></dl>
+  <h3>Model boundaries</h3><p>Every string has equal cost, whatever its drawn length. Links work in both directions. Devices can relay messages, and a central route calculation chooses a shortest path. This models connectivity and alternate routes. Real networks use protocols and routers and have unequal delays, capacities, and costs. A string cut models a link failure, not a device failure.</p>
+  <p class="muted" style="font-size:.8rem;margin-top:20px">Adapted from the supplied “CSP The Internet – Lesson 02 – Building a Network” presentation, challenges on slides 6–10 and vocabulary on slide 14. The simulator and adjustable round 4 targets are original teaching extensions.</p>
+</div></dialog>
+<script id="network-core">
+'use strict';
+const NetworkCore = (() => {
+  const pairKey = (a,b) => a < b ? `${a}-${b}` : `${b}-${a}`;
+  function adjacency(n,edges,omit=null){
+    const adj=Array.from({length:n},()=>[]);
+    for(const e of edges){if(e.cut||pairKey(e.a,e.b)===omit)continue;adj[e.a].push(e.b);adj[e.b].push(e.a);}
+    for(const neighbors of adj)neighbors.sort((a,b)=>a-b);
+    return adj;
+  }
+  function distances(adj,start){
+    const d=Array(adj.length).fill(Infinity),parent=Array(adj.length).fill(-1),queue=[start];d[start]=0;
+    for(let q=0;q<queue.length;q++){const at=queue[q];for(const next of adj[at])if(d[next]===Infinity){d[next]=d[at]+1;parent[next]=at;queue.push(next);}}
+    return {d,parent};
+  }
+  function path(n,edges,start,end){
+    if(start===end)return [start];
+    const {d,parent}=distances(adjacency(n,edges),start);if(d[end]===Infinity)return null;
+    const result=[end];while(result[0]!==start)result.unshift(parent[result[0]]);return result;
+  }
+  function components(adj){
+    const seen=new Set();let count=0;
+    for(let i=0;i<adj.length;i++)if(!seen.has(i)){count++;const stack=[i];seen.add(i);while(stack.length){for(const next of adj[stack.pop()])if(!seen.has(next)){seen.add(next);stack.push(next);}}}
+    return count;
+  }
+  function metrics(n,edges){
+    const adj=adjacency(n,edges),groups=components(adj),total=n*(n-1)/2;
+    let reachable=0,maxHops=0,sum=0;
+    for(let i=0;i<n;i++){const {d}=distances(adj,i);for(let j=i+1;j<n;j++)if(d[j]!==Infinity){reachable++;sum+=d[j];maxHops=Math.max(maxHops,d[j]);}}
+    const live=edges.filter(e=>!e.cut),bridges=live.filter(e=>components(adjacency(n,edges,pairKey(e.a,e.b)))>groups).map(e=>pairKey(e.a,e.b));
+    return {total,reachable,groups,connected:groups===1,installed:edges.length,live:live.length,cut:edges.length-live.length,maxHops:groups===1?maxHops:null,meanHops:reachable?sum/reachable:null,bridges,resilient:groups===1&&bridges.length===0};
+  }
+  function example(n,type){
+    const edges=[],add=(a,b)=>{if(a!==b&&!edges.some(e=>pairKey(e.a,e.b)===pairKey(a,b)))edges.push({a:Math.min(a,b),b:Math.max(a,b),cut:false});};
+    if(type==='mesh')for(let a=0;a<n;a++)for(let b=a+1;b<n;b++)add(a,b);
+    if(type==='star')for(let b=1;b<n;b++)add(0,b);
+    if(type==='chain')for(let b=1;b<n;b++)add(b-1,b);
+    if(type==='ring'||type==='shortcuts'){for(let b=0;b<n;b++)add(b,(b+1)%n);if(type==='shortcuts'){add(0,Math.floor(n/3));add(0,Math.floor(2*n/3));}}
+    return edges;
+  }
+  function assess(round,n,edges,budget,hopLimit){
+    const m=metrics(n,edges),intact=m.cut===0;
+    if(round===1){const pass=intact&&m.live===m.total;return {pass,title:pass?'Everyone can speak directly':'Build direct connections',detail:pass?`All ${m.total} pairs have their own string.`:`${m.total-m.live} more working direct ${m.total-m.live===1?'connection is':'connections are'} needed. An indirect path does not meet this challenge.`};}
+    if(round===2){const pass=intact&&m.connected&&m.installed===n-1;return {pass,title:pass?'Minimum string reached':m.connected?'Everyone is connected':'Some devices cannot communicate',detail:pass?`${n-1} strings connect ${n} devices. Removing any string would separate this network.`:!m.connected?`There are ${m.groups} separate groups. Find paths between them.`:`Everyone can communicate. Reach ${n-1} installed strings to meet the minimum-cost goal.${!intact?' Remove or repair cut strings.':''}`};}
+    if(round===3){const pass=intact&&m.resilient&&m.installed===n;return {pass,title:pass?'Minimum string, with a backup path':!m.connected?'The network is separated':m.resilient?'Any one working string can fail':'One cut can separate the network',detail:pass?`All ${n} individual cuts keep every device connected. ${n} strings is the minimum for this challenge.`:!m.connected?`Reconnect all ${m.groups} groups before checking resilience.`:!m.resilient?`${m.bridges.length} working ${m.bridges.length===1?'string has':'strings have'} no alternate path. Add a route around each one.`:`The working network survives any one cut. Aim for ${n} installed strings with all of them repaired.`};}
+    const pass=intact&&m.resilient&&m.installed<=budget&&m.maxHops<=hopLimit;
+    const needs=[];if(!m.connected)needs.push('connect all devices');else{if(!m.resilient)needs.push('add backup paths');if(m.maxHops>hopLimit)needs.push(`reduce the longest path to ${hopLimit} hops`);}if(m.installed>budget)needs.push(`use at most ${budget} strings`);if(!intact)needs.push('repair or remove cut strings');
+    return {pass,title:pass?'Your design meets these targets':'Balance the three constraints',detail:pass?'Meets the string budget, survives any one string cut, and keeps paths within the hop limit.':needs.length?`Next: ${needs.join('; ')}.`:'Try a design and compare its cost, backup paths, and hops.'};
+  }
+  function validate(data){
+    if(!data||typeof data!=='object'||data.version!==1)throw Error('This is not a String Lab design file.');
+    const n=data.n;if(!Number.isInteger(n)||n<3||n>16)throw Error('The design needs 3–16 devices.');
+    if(!Number.isInteger(data.round)||data.round<1||data.round>4)throw Error('The challenge number must be 1–4.');
+    if(!Array.isArray(data.edges)||data.edges.length>n*(n-1)/2)throw Error('The connection list is invalid.');
+    const seen=new Set(),edges=data.edges.map(e=>{if(!e||!Number.isInteger(e.a)||!Number.isInteger(e.b)||e.a<0||e.b<0||e.a>=n||e.b>=n||e.a===e.b||typeof e.cut!=='boolean')throw Error('A connection has invalid endpoints or status.');const key=pairKey(e.a,e.b);if(seen.has(key))throw Error('The file repeats a connection.');seen.add(key);return {a:Math.min(e.a,e.b),b:Math.max(e.a,e.b),cut:e.cut};});
+    if(!Number.isInteger(data.budget)||data.budget<0||data.budget>120||!Number.isInteger(data.hopLimit)||data.hopLimit<1||data.hopLimit>15)throw Error('The classroom targets are invalid.');
+    if(!Array.isArray(data.notes)||data.notes.length!==4||data.notes.some(s=>typeof s!=='string'||s.length>5000))throw Error('The reflection text is invalid.');
+    return {version:1,n,round:data.round,edges,budget:data.budget,hopLimit:data.hopLimit,notes:[...data.notes]};
+  }
+  return {pairKey,adjacency,distances,path,components,metrics,example,assess,validate};
+})();
+if(typeof module!=='undefined'&&module.exports)module.exports=NetworkCore;
+</script>
+<script id="network-interface">
+'use strict';
+(() => {
+  const $=id=>document.getElementById(id),NS='http://www.w3.org/2000/svg',letter=i=>String.fromCharCode(65+i),clone=x=>JSON.parse(JSON.stringify(x));
+  const rounds=[
+    {title:'Everyone, directly',description:'Create a network where every device can speak directly to every other device. Each direct connection needs its own string.',prompt:'Why does this network need so many strings? How would adding one more device change the cost?'},
+    {title:'Less string',description:'Keep every device able to communicate, using the fewest strings possible. Messages can pass through other devices.',prompt:'How did you reduce the string count? Describe an indirect path in your design. What happens if a string is cut?'},
+    {title:'Survive a cut',description:'Keep every device connected even if any one string is cut. Find a design that does this using the fewest strings.',prompt:'Which alternate path carries a message after a cut? Why can your design survive every individual string cut?'},
+    {title:'Find a balance',description:'Balance the cost of strings, backup paths after a cut, and short message paths. Test a design against the classroom targets.',prompt:'Explain your compromise between cost, reliability, and path length. Which different priorities would make you choose a different network?'}
+  ];
+  const exampleNames={mesh:'Full mesh',chain:'Chain',star:'Star',ring:'Ring',shortcuts:'Ring + shortcuts'};
+  let state={version:1,n:6,round:1,edges:[],budget:8,hopLimit:3,notes:['','','','']},history=[],tool='connect',selected=null,route=null,routeIndex=0,animation=0,toastTimer=0;
+  const snapshot=()=>{state.notes[state.round-1]=$('reflection').value;return clone(state);};
+  function remember(){history.push(snapshot());if(history.length>80)history.shift();}
+  function cancelPacket(){if(animation)cancelAnimationFrame(animation);animation=0;$('packetLayer').replaceChildren();}
+  function clearRoute(){cancelPacket();route=null;routeIndex=0;$('routeResult').textContent='Choose a sender and receiver, then send a message.';}
+  function notify(message){$('toast').textContent=message;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>{$('toast').hidden=true;},4200);}
+  function position(i){const angle=2*Math.PI*i/state.n-Math.PI/2;return {x:380+240*Math.cos(angle),y:258+185*Math.sin(angle)};}
+  function svg(tag,attrs={},textValue){const el=document.createElementNS(NS,tag);for(const [k,v]of Object.entries(attrs))el.setAttribute(k,v);if(textValue!==undefined)el.textContent=textValue;return el;}
+  function accessibleAction(el,fn){el.addEventListener('click',fn);el.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();fn();}});}
+  function redrawGraph(m){
+    const edgeLayer=$('edgeLayer'),nodeLayer=$('nodeLayer'),focusedId=document.activeElement?.id;edgeLayer.replaceChildren();nodeLayer.replaceChildren();
+    const routeKeys=new Set(route?route.slice(1).map((b,i)=>NetworkCore.pairKey(route[i],b)):[]);
+    for(const e of state.edges){
+      const a=position(e.a),b=position(e.b),key=NetworkCore.pairKey(e.a,e.b),risky=$('showRisk').checked&&$('teacherMode').checked&&m.bridges.includes(key);
+      const group=svg('g'),classes=`edge${e.cut?' cut':''}${risky?' vulnerable':''}${routeKeys.has(key)&&!e.cut?' route':''}`;
+      group.append(svg('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,class:classes}));
+      const hit=svg('line',{id:`string-${key}`,x1:a.x,y1:a.y,x2:b.x,y2:b.y,class:'hit',tabindex:tool==='cut'?0:-1,role:'button','aria-label':`String ${letter(e.a)} to ${letter(e.b)}, ${e.cut?'cut. Activate to repair':'working. Activate to cut'}`});
+      accessibleAction(hit,()=>{if(tool!=='cut'){notify('To cut a string, choose Cut / repair first.');return;}remember();e.cut=!e.cut;selected=null;clearRoute();render();notify(`String ${letter(e.a)}–${letter(e.b)} ${e.cut?'cut':'repaired'}.`);});group.append(hit);
+      if(e.cut)group.append(svg('text',{x:(a.x+b.x)/2,y:(a.y+b.y)/2+7,'text-anchor':'middle',class:'cut-mark'},'×'));
+      edgeLayer.append(group);
+    }
+    for(let i=0;i<state.n;i++){
+      const p=position(i),group=svg('g',{id:`device-${i}`,class:`device${selected===i?' selected':''}`,tabindex:0,role:'button','aria-label':`Device ${letter(i)}${selected===i?', selected':''}`,'aria-pressed':selected===i?'true':'false'});
+      group.append(svg('circle',{cx:p.x,cy:p.y,r:29,class:'node-ring'}),svg('circle',{cx:p.x,cy:p.y,r:22,class:'node-core'}),svg('text',{x:p.x,y:p.y+7,'text-anchor':'middle',class:'node-letter'},letter(i)));
+      if(state.n<10)group.append(svg('text',{x:p.x,y:p.y+49,'text-anchor':'middle',class:'node-label'},`Device ${letter(i)}`));
+      accessibleAction(group,()=>selectDevice(i));nodeLayer.append(group);
+    }
+    $('networkDescription').textContent=`${state.n} devices, ${m.live} working strings, ${m.cut} cut strings, ${m.groups} connected ${m.groups===1?'group':'groups'}. ${m.reachable} of ${m.total} device pairs can communicate. ${tool==='connect'?'Select two devices to add or remove a string.':'Select a string to cut or repair it.'}`;
+    if(focusedId?.startsWith('device-')||focusedId?.startsWith('string-'))$(focusedId)?.focus();
+  }
+  function selectDevice(i){
+    if(tool==='cut'){notify('Select the string between devices to cut or repair it.');return;}
+    if(selected===null){selected=i;render();return;}
+    if(selected===i){selected=null;render();return;}
+    remember();const a=selected,b=i,key=NetworkCore.pairKey(a,b),index=state.edges.findIndex(e=>NetworkCore.pairKey(e.a,e.b)===key);selected=null;
+    if(index>=0){state.edges.splice(index,1);notify(`String ${letter(a)}–${letter(b)} removed.`);}else{state.edges.push({a:Math.min(a,b),b:Math.max(a,b),cut:false});notify(`String ${letter(a)}–${letter(b)} added.`);}clearRoute();render();
+  }
+  function syncSelectors(){
+    const oldStart=Number($('sender').value),oldEnd=$('receiver').value===''?state.n-1:Number($('receiver').value);
+    for(const id of ['sender','receiver']){const el=$(id);el.replaceChildren();for(let i=0;i<state.n;i++){const opt=document.createElement('option');opt.value=i;opt.textContent=letter(i);el.append(opt);}}
+    $('sender').value=Math.min(oldStart,state.n-1);$('receiver').value=Math.min(oldEnd,state.n-1);
+  }
+  function renderExamples(){
+    $('exampleTable').replaceChildren();for(const [key,name]of Object.entries(exampleNames)){const m=NetworkCore.metrics(state.n,NetworkCore.example(state.n,key)),row=document.createElement('tr');for(const value of [name,m.installed,`${m.maxHops} ${m.maxHops===1?'hop':'hops'}`,m.bridges.length]){const cell=document.createElement('td');cell.textContent=value;row.append(cell);}$('exampleTable').append(row);}
+  }
+  function render(){
+    const m=NetworkCore.metrics(state.n,state.edges),assessment=NetworkCore.assess(state.round,state.n,state.edges,state.budget,state.hopLimit),r=rounds[state.round-1];
+    $('goalEyebrow').textContent=`Challenge ${state.round} of 4`;$('goalTitle').textContent=r.title;$('goalDescription').textContent=r.description;$('goalStatus').textContent=assessment.title;$('goalFeedback').textContent=assessment.detail;$('goalState').className=`goal-state${assessment.pass?' pass':!m.connected&&state.edges.length?' warn':''}`;
+    $('stringsMetric').textContent=m.installed;$('workingMetric').textContent=m.live;$('pairsMetric').replaceChildren(document.createTextNode(`${m.reachable} `));const denominator=document.createElement('small');denominator.textContent=`/ ${m.total}`;$('pairsMetric').append(denominator);
+    $('hopsMetric').textContent=m.maxHops===null?'No full path':`${m.maxHops} ${m.maxHops===1?'hop':'hops'}`;$('hopsMetric').style.fontSize=m.maxHops===null?'1rem':'';$('bridgeMetric').textContent=m.bridges.length;
+    $('failureCheck').textContent=!m.connected?'Single-cut check: connect all devices first.':m.resilient?`Single-cut check: all ${m.live} individual cuts keep every device connected.`:`Single-cut check: ${m.bridges.length} of ${m.live} working strings would separate the network if cut.`;
+    $('balanceTargets').hidden=state.round!==4;$('stringBudget').value=state.budget;$('hopLimit').value=state.hopLimit;$('stringBudget').max=state.n*(state.n-1)/2;$('hopLimit').max=state.n-1;$('stringBudget').readOnly=!$('teacherMode').checked;$('hopLimit').readOnly=!$('teacherMode').checked;$('deviceCount').value=state.n;
+    $('reflectionRound').textContent=`Challenge ${state.round} of 4`;$('reflectionPrompt').textContent=r.prompt;
+    document.querySelectorAll('[data-round]').forEach(b=>b.setAttribute('aria-selected',Number(b.dataset.round)===state.round?'true':'false'));
+    $('connectTool').setAttribute('aria-pressed',tool==='connect'?'true':'false');$('cutTool').setAttribute('aria-pressed',tool==='cut'?'true':'false');$('undoButton').disabled=history.length===0;$('testCut').disabled=m.live===0;$('repairAll').disabled=m.cut===0;$('clearButton').disabled=state.edges.length===0;$('nextButton').textContent=state.round===4?'Back to challenge 1':'Next challenge';
+    $('instruction').textContent=tool==='cut'?'Select any string to cut or repair it. Cut strings still count as paid for.':selected===null?'Select two devices to add a string. Select the same pair again to remove it.':`Device ${letter(selected)} selected. Choose a second device to add or remove their string. Escape cancels.`;
+    $('examples').hidden=!$('teacherMode').checked;$('riskControl').hidden=!$('teacherMode').checked;
+    redrawGraph(m);renderExamples();if(route&&routeIndex>=0)drawPacketAtIndex();
+  }
+  function changeRound(round){if(round===state.round)return;state.notes[state.round-1]=$('reflection').value;state.round=round;$('reflection').value=state.notes[round-1];selected=null;clearRoute();render();notify(`Challenge ${round}. Your existing strings stay in place.`);}
+  function drawPacket(x,y){$('packetLayer').replaceChildren(svg('circle',{cx:x,cy:y,r:9,class:'packet'}));}
+  function drawPacketAtIndex(){if(route){const at=position(route[Math.min(routeIndex,route.length-1)]);drawPacket(at.x,at.y-37);}}
+  function routeText(delivered=false){
+    if(!route)return;const hops=route.length-1;
+    $('routeResult').textContent=route.length===1?`The message is already at device ${letter(route[0])}. 0 hops.`:`${route.map(letter).join(' → ')} · ${hops} ${hops===1?'hop':'hops'} · ${delivered?'Delivered':`At ${letter(route[routeIndex])}`}`;
+  }
+  function prepareRoute(){
+    cancelPacket();route=NetworkCore.path(state.n,state.edges,Number($('sender').value),Number($('receiver').value));routeIndex=0;
+    if(!route){$('routeResult').textContent=`No path from ${letter(Number($('sender').value))} to ${letter(Number($('receiver').value))}. Connect the groups or repair a string.`;render();return false;}render();routeText(route.length===1);return true;
+  }
+  function send(){
+    if(!prepareRoute())return;
+    if(route.length===1)return;
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){routeIndex=route.length-1;drawPacketAtIndex();routeText(true);return;}
+    const currentRoute=route,start=performance.now(),duration=(route.length-1)*650;
+    function frame(now){if(route!==currentRoute)return;const elapsed=Math.min(now-start,duration),part=elapsed/650,at=Math.min(Math.floor(part),route.length-2),progress=elapsed===duration?1:part-at,a=position(route[at]),b=position(route[at+1]);drawPacket(a.x+(b.x-a.x)*progress,a.y+(b.y-a.y)*progress);routeIndex=Math.min(Math.floor(part),route.length-1);routeText(elapsed===duration);if(elapsed<duration)animation=requestAnimationFrame(frame);else{animation=0;drawPacketAtIndex();}}
+    animation=requestAnimationFrame(frame);
+  }
+  function step(){
+    cancelPacket();const next=NetworkCore.path(state.n,state.edges,Number($('sender').value),Number($('receiver').value));
+    if(!next){prepareRoute();return;}
+    if(!route||routeIndex>=route.length-1||route.join(',')!==next.join(',')){prepareRoute();if(route.length===1)return;}routeIndex=Math.min(routeIndex+1,route.length-1);drawPacketAtIndex();routeText(routeIndex===route.length-1);
+  }
+  function download(name,content,type){const url=URL.createObjectURL(new Blob([content],{type})),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);}
+  function report(){
+    snapshot();const m=NetworkCore.metrics(state.n,state.edges),lines=['BUILDING A NETWORK — DESIGN REFLECTION','Name: ____________________    Class: ____________________',`Current challenge: ${state.round} — ${rounds[state.round-1].title}`,`Devices: ${state.n}`,`Installed strings: ${m.installed}; working: ${m.live}; cut: ${m.cut}`,`Communicating pairs: ${m.reachable}/${m.total}`,`Longest shortest path: ${m.maxHops===null?'Network disconnected':m.maxHops+' hops'}`,`Risky working strings: ${m.bridges.length}`,`Every single working-string cut keeps all devices connected: ${m.resilient?'Yes':'No'}`,`Round 4 targets: budget ${state.budget} strings; maximum ${state.hopLimit} hops; survive any one string cut`,'','CURRENT CONNECTIONS',...state.edges.map(e=>`${letter(e.a)} — ${letter(e.b)}: ${e.cut?'CUT':'working'}`),''];
+    if(!state.edges.length)lines.push('(No strings)');for(let i=0;i<4;i++)lines.push(`CHALLENGE ${i+1}: ${rounds[i].title}`,rounds[i].prompt,state.notes[i]||'(No reflection entered)','','');lines.push('Model: equal cost per string, bidirectional links, shortest-hop routes. Cut strings remain paid for. Link failures only. Hops are not a bandwidth measurement.');download('Network_Reflection.txt',lines.join('\n'),'text/plain;charset=utf-8');notify('Reflection downloaded. Save design separately to keep an editable network.');
+  }
+  for(const [key,name]of Object.entries(exampleNames)){const b=document.createElement('button');b.textContent=name;b.addEventListener('click',()=>{remember();state.edges=NetworkCore.example(state.n,key);selected=null;clearRoute();render();notify(`${name} loaded for ${state.n} devices.`);});$('exampleControls').append(b);}
+  document.querySelectorAll('[data-round]').forEach(b=>b.addEventListener('click',()=>changeRound(Number(b.dataset.round))));
+  $('nextButton').addEventListener('click',()=>changeRound(state.round%4+1));
+  for(const [id,name]of [['connectTool','connect'],['cutTool','cut']])$(id).addEventListener('click',()=>{cancelPacket();tool=name;selected=null;render();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){selected=null;render();}});
+  $('applyCount').addEventListener('click',()=>{const n=Number($('deviceCount').value);if(!Number.isInteger(n)||n<3||n>16){notify('Choose a whole number from 3 to 16.');$('deviceCount').value=state.n;return;}if(n===state.n)return;remember();state.n=n;state.edges=[];state.budget=Math.min(n+2,n*(n-1)/2);state.hopLimit=3;selected=null;clearRoute();syncSelectors();render();notify(`${n} devices ready. Changing the device count starts a new network. Undo restores the previous one.`);});
+  $('deviceCount').addEventListener('keydown',e=>{if(e.key==='Enter')$('applyCount').click();});
+  $('clearButton').addEventListener('click',()=>{remember();state.edges=[];selected=null;clearRoute();render();notify('All strings removed. Undo restores them.');});
+  $('undoButton').addEventListener('click',()=>{if(!history.length)return;const currentNotes=[...state.notes];currentNotes[state.round-1]=$('reflection').value;state=history.pop();state.notes=currentNotes;$('reflection').value=state.notes[state.round-1];selected=null;clearRoute();syncSelectors();render();notify('Previous design restored.');});
+  $('repairAll').addEventListener('click',()=>{if(!state.edges.some(e=>e.cut))return;remember();state.edges.forEach(e=>e.cut=false);clearRoute();render();notify('All installed strings repaired.');});
+  $('testCut').addEventListener('click',()=>{const m=NetworkCore.metrics(state.n,state.edges);if(!m.live)return;const risky=state.edges.filter(e=>!e.cut&&m.bridges.includes(NetworkCore.pairKey(e.a,e.b))),candidates=risky.length?risky:state.edges.filter(e=>!e.cut),target=candidates[Math.floor(Math.random()*candidates.length)];remember();target.cut=true;selected=null;clearRoute();render();const after=NetworkCore.metrics(state.n,state.edges);notify(`Cut ${letter(target.a)}–${letter(target.b)}. ${after.connected?'Everyone can still communicate.':'The network is separated.'} Repair between single-cut trials.`);});
+  $('teacherMode').addEventListener('change',()=>{render();notify($('teacherMode').checked?'Teacher examples and risk highlighting are available.':'Student mode. Build and test your own design.');});
+  $('showRisk').addEventListener('change',()=>{cancelPacket();render();});
+  for(const id of ['stringBudget','hopLimit'])$(id).addEventListener('change',()=>{if(!$('teacherMode').checked){render();return;}const value=Number($(id).value),max=id==='stringBudget'?state.n*(state.n-1)/2:state.n-1,min=id==='stringBudget'?0:1;if(!Number.isInteger(value)||value<min||value>max){notify(`Choose a whole number from ${min} to ${max}.`);render();return;}remember();state[id==='stringBudget'?'budget':'hopLimit']=value;render();});
+  $('reflection').addEventListener('input',()=>{state.notes[state.round-1]=$('reflection').value;});
+  $('sendButton').addEventListener('click',send);$('stepButton').addEventListener('click',step);$('clearPath').addEventListener('click',()=>{clearRoute();render();});
+  for(const id of ['sender','receiver'])$(id).addEventListener('change',()=>{clearRoute();render();});
+  $('guideButton').addEventListener('click',()=>{$('guide').showModal();});$('closeGuide').addEventListener('click',()=>{$('guide').close();});
+  $('presentButton').addEventListener('click',()=>{const active=document.body.classList.toggle('presenting');$('presentButton').setAttribute('aria-pressed',active?'true':'false');$('presentButton').textContent=active?'Exit projector view':'Projector view';});
+  $('saveButton').addEventListener('click',()=>{download('Network_Design.json',JSON.stringify(snapshot(),null,2),'application/json');notify('Design downloaded, including all four reflections.');});
+  $('loadButton').addEventListener('click',()=>{$('loadFile').click();});
+  $('loadFile').addEventListener('change',async()=>{const file=$('loadFile').files[0];if(!file)return;try{if(file.size>100000)throw Error('Choose a design file smaller than 100 KB.');const imported=NetworkCore.validate(JSON.parse(await file.text()));remember();state=imported;$('reflection').value=state.notes[state.round-1];selected=null;clearRoute();syncSelectors();render();notify('Saved design and reflections restored.');}catch(error){notify(`Could not open design: ${error.message}`);}$('loadFile').value='';});
+  $('reportButton').addEventListener('click',report);$('printButton').addEventListener('click',()=>window.print());
+  $('goalDescription').textContent=rounds[0].description;$('reflection').value=state.notes[0];syncSelectors();render();
+})();
+</script>
+</body>
+</html>
